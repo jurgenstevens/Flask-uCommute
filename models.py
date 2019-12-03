@@ -18,5 +18,26 @@ class User(UserMixin, Model):
 	email = CharField(unique = True)
 	password = CharField()
 
+	class Meta: #special constructor that will give our class instructions telling our
+	# model to connect to a specific database
+		database = DATABASE
+
+
+class Trip(Model):
+	user_id = CharField()
+	color_id = CharField()
+	origin = CharField()
+	destination = CharField()
+	direction = CharField()
+
 	class Meta:
 		database = DATABASE
+	
+def initialize(): # i'm making this name up
+	DATABASE.connect()
+	DATABASE.create_tables([User, Trip], safe=True) #safe=True checks to see if the table was created
+	# if it was, don't erase it
+	print("TABLES created")
+	DATABASE.close()
+
+
