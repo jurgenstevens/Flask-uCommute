@@ -57,7 +57,7 @@ def login():
 
 	try:
 		#look up user by email
-		user = model.User.get(models.User.email == payload['email'])
+		user = models.User.get(models.User.email == payload['email'])
 		# so we can access the info in user
 		user_dict = model_to_dict(user)
 		# check user's password using bcrypt
