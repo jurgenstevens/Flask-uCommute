@@ -4,14 +4,14 @@
 # run "pip3 install -r requirements.txt." in git after cloning an assignment
 # run source .env/bin/activate in git
 # create a file called "ucommute.sqlite"
+
 from flask import Flask, jsonify, g # g = global variable
 from flask_cors import CORS
-
 #this is the main tool for coordinating session/login stuff in our app
 from flask_login import LoginManager
-
-# from resources.trips import trips
 from resources.users import users
+from resources.stations import station
+# from resources.trips import trip
 
 import models #S1 we gotta import the object and method that's going to create our app
 
@@ -52,13 +52,17 @@ def unauthorize():
 #S5
 # localhost:3000 will be the react app when it's created
 # localhost:3000 represents a client that will communicate with our API
-#CORS(trip, origins=['http://localhost:3000'], supports_credentials=True) # add this line later
+# CORS(trip, origins=['http://localhost:3000'], supports_credentials=True) # add this line later
 # supports_credentials allows cookies to be sent to our API session
 CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
+
+CORS(station, origins=['http://localhost:3000'], supports_credentials=True) # add this line later
+
 
 #S6 - this sets up our routes on our app - app.use(/dsf, tripController
 # app.register_blueprint(trip, url_prefix='/api/v1/trips') 
 app.register_blueprint(users, url_prefix='/api/v1/users')
+app.register_blueprint(station, url_prefix='/api/v1/stations')
 
 @app.before_request #this is a decorator function, runs before another function, so we will run the flask before_request before our before_request
 def before_request():

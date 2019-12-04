@@ -24,18 +24,31 @@ class User(UserMixin, Model):
 
 
 class Trip(Model):
-	user_id = CharField()
-	color_id = CharField()
+	user_id = IntegerField()
+	color_id = IntegerField()
 	origin = CharField()
 	destination = CharField()
 	direction = CharField()
+	transfer = BooleanField()
 
 	class Meta:
 		database = DATABASE
-	
+
+class Station(Model):
+	user_id = CharField()
+	stop_id = CharField() # Blue Line O-Hare Station = BL-A
+	station_name = CharField()
+	line_color = CharField()
+	direction = CharField()
+	transfer = BooleanField()
+	# order_number = Str() not necessary because station name is a more symantic name for a key
+	class Meta:
+		database = DATABASE
+
+
 def initialize(): # i'm making this name up
 	DATABASE.connect()
-	DATABASE.create_tables([User, Trip], safe=True) #safe=True checks to see if the table was created
+	DATABASE.create_tables([User, Trip, Station], safe=True) #safe=True checks to see if the table was created
 	# if it was, don't erase it
 	print("TABLES created")
 	DATABASE.close()
