@@ -1,12 +1,10 @@
 import models
-import xmltodict
+from peewee import *
 from flask import Blueprint, jsonify, request # import the request object
 from flask_login import current_user, login_required
 from playhouse.shortcuts import model_to_dict
 # from resources.users import users
 # from resources.stations import station
-
-from peewee import *
 
 
 # first argument is blueprints name
@@ -20,17 +18,17 @@ trip = Blueprint('trips', 'trip')
 @trip.route('/', methods=["GET"])
 @login_required
 def trip_index():
-	try:
+	# try:
 		this_user_trip_instances = models.Trip.select().where(models.Trip.user_id == current_user.id)
 		print('THESE ARE THE TRIP INSTANCES')
 		print(this_user_trip_instances)
-		this_user_trips_dicts = [model_to_dict(trip) for trip in this_user_trip_instances]
-		# print('THESE ARE THE TRIP DICTS')
-		# print(this_user_trips_dicts)
+		this_user_trip_dicts = [model_to_dict(trip) for trip in this_user_trip_instances]
+		print('THESE ARE THE TRIP DICTS')
+		print(this_user_trip_dicts)
 
-		return jsonify(data=this_user_trips_dicts, status={"code": 200, "message": "Here are your trips!"})
-	except models.DoesNotExist:
-		return jsonify(data={}, status={'code': 401, 'message': 'ERROR'}), 401
+		return jsonify(data=this_user_trip_dicts, status={"code": 200, "message": "Here are your trips!"})
+	# except models.DoesNotExist:
+	# 	return jsonify(data={}, status={'code': 401, 'message': 'ERROR'}), 401
 
 # crete a trip
 @trip.route('/<user_id>', methods=["POST"])
@@ -84,7 +82,7 @@ def create_a_trip(user_id):
 # JSON TO CREATE A TRIP:
 # {
 # 	"user_id": "1",
-#	"trip_name": "Work Commute"
+# 	"trip_name": "Work Commute"
 # 	"color_id": "Orange",
 # 	"origin": "O-A",
 # 	"destination": "O-G",
