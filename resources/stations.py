@@ -22,7 +22,7 @@ def stations_index():
 	# S5 find the stations and change each one to a dictionary into a new array
 	try:
 		this_user_station_instances = models.Station.select().where(models.Station.user_id == current_user.id)
-		this_user_station_dicts = [model_to_dict(station) for station in this_user_instances]
+		this_user_station_dicts = [model_to_dict(station) for station in this_user_station_instances]
 
 		return jsonify(data=this_user_station_dicts, status={"code": 200, "message": "Success!"})
 	except models.DoesNotExist:
@@ -44,12 +44,14 @@ def create_station():
 
 # CREATE A STATION JSON TEMPLATE FOR POSTMAN
 # {
+#	"user_id": "1",
 # 	"stop_id": "O-A",
 # 	"station_name": "Midway",
 # 	"line_color": "Orange",
 # 	"direction": "N",
 # 	"transfer": "false"
 # }
+
 
 #S6 create the SHOW route
 @station.route('/<id>', methods=["GET"])

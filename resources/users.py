@@ -68,7 +68,7 @@ def login():
 			login_user(user)
 			del user_dict['password']
 
-			return jsonify(data=user_dict, status={'code': 200, 'message': 'Successfully registerd {}'.format(user_dict['email'])}), 200
+			return jsonify(data=user_dict, status={'code': 200, 'message': 'Successfully logged in {}'.format(user_dict['email'])}), 200
 
 		else:
 			print('This password doesnt work')
@@ -79,6 +79,11 @@ def login():
 		print('Email not found')
 		return jsonify(data={}, status={'code': 401, 'message': 'Email or password are incorrect'}), 401
 
+# {
+# 	"username": "jurgen",
+# 	"email": "jurgen@email.com",
+# 	"password": "1234"
+# }
 
 
 

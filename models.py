@@ -22,28 +22,36 @@ class User(UserMixin, Model):
 	# model to connect to a specific database
 		database = DATABASE
 
-
-class Trip(Model):
-	user_id = IntegerField()
-	color_id = IntegerField()
-	origin = CharField()
-	destination = CharField()
-	direction = CharField()
-	transfer = BooleanField()
-
-	class Meta:
-		database = DATABASE
-
 class Station(Model):
-	user_id = CharField()
-	stop_id = CharField() # Blue Line O-Hare Station = BL-A
+	user_id = ForeignKeyField(User, backref="users")
+	stop_id_origin = CharField() # Blue Line O-Hare Station = BL-A
+	stop_id_dest = CharField() 
 	station_name = CharField()
 	line_color = CharField()
 	direction = CharField()
 	transfer = BooleanField()
-	# order_number = Str() not necessary because station name is a more symantic name for a key
+	# trips = CharField()
+	# transfer_to = CharField() ##drop database and include what line_color user can transfer to
 	class Meta:
 		database = DATABASE
+
+class Trip(Model):
+	user_id = ForeignKeyField(Station, backref="trips")
+	trip_name = CharField()
+	color_id = ForeignKeyField(Station, backref="trips") # probably won't need this
+	origin = ForeignKeyField(Station, backref="trips")
+	destination = ForeignKeyField(Station, backref="trips")
+	direction = ForeignKeyField(Station, backref="trips")
+	transfer = ForeignKeyField(Station, backref="trips")
+	# transfer_to = CharField()
+
+	class Meta:
+		database = DATABASE
+
+
+# class Transfer(Model):
+# 	user_id = CharField()
+# 	color_id = CharField()
 
 
 def initialize(): # i'm making this name up
