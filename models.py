@@ -36,13 +36,13 @@ class Station(Model):
 		database = DATABASE
 
 class Trip(Model):
-	user_id = ForeignKeyField(Station, backref="trips")
+	user_id = CharField()
 	trip_name = CharField()
-	color_id = ForeignKeyField(Station, backref="trips") # probably won't need this
-	origin = ForeignKeyField(Station, backref="trips")
-	destination = ForeignKeyField(Station, backref="trips")
-	direction = ForeignKeyField(Station, backref="trips")
-	transfer = ForeignKeyField(Station, backref="trips")
+	color_id = CharField() # probably won't need this
+	origin = ForeignKeyField(Station, backref="stations")
+	destination = ForeignKeyField(Station, backref="stations")
+	direction = CharField()
+	transfer = BooleanField()
 	# transfer_to = CharField()
 
 	class Meta:

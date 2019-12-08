@@ -18,17 +18,17 @@ trip = Blueprint('trips', 'trip')
 @trip.route('/', methods=["GET"])
 @login_required
 def trip_index():
-	# try:
+	try:
 		this_user_trip_instances = models.Trip.select().where(models.Trip.user_id == current_user.id)
-		print('THESE ARE THE TRIP INSTANCES')
-		print(this_user_trip_instances)
+		# print('THESE ARE THE TRIP INSTANCES')
+		# print(this_user_trip_instances)
 		this_user_trip_dicts = [model_to_dict(trip) for trip in this_user_trip_instances]
-		print('THESE ARE THE TRIP DICTS')
-		print(this_user_trip_dicts)
+		# print('THESE ARE THE TRIP DICTS')
+		# print(this_user_trip_dicts)
 
 		return jsonify(data=this_user_trip_dicts, status={"code": 200, "message": "Here are your trips!"})
-	# except models.DoesNotExist:
-	# 	return jsonify(data={}, status={'code': 401, 'message': 'ERROR'}), 401
+	except models.DoesNotExist:
+		return jsonify(data={}, status={'code': 401, 'message': 'ERROR'}), 401
 
 # crete a trip
 @trip.route('/<user_id>', methods=["POST"])
@@ -37,7 +37,7 @@ def trip_index():
 def create_a_trip(user_id):
 	# try:
 		payload = request.get_json()
-		print(payload)
+		# print(payload)
 		# # picking a start point
 		trip_start = models.Station.get(stop_id_origin=payload['origin'])
 		# # trip_start = models.Station.create(**payload)
@@ -82,7 +82,7 @@ def create_a_trip(user_id):
 # JSON TO CREATE A TRIP:
 # {
 # 	"user_id": "1",
-# 	"trip_name": "Work Commute"
+#	"trip_name": "Work Commute"
 # 	"color_id": "Orange",
 # 	"origin": "O-A",
 # 	"destination": "O-G",
@@ -94,7 +94,7 @@ def create_a_trip(user_id):
 
 # this is the SHOW route to see specific trips
 @trip.route('/<id>', methods=["GET"])
-def pick_your_trip():
+def pick_your_trip(id):
 	trip = models.Trip.get_by_id(id)
 
 	return jsonify(data=model_to_dict(trip), status={"code": 200, "message": "Here's the trip you chose!"}), 200
@@ -106,15 +106,18 @@ def pick_your_trip():
 @trip.route('/<id>', methods=["PUT"])
 @login_required
 def update_trip(id):
-	payload = request.get_json()
+	try:
+		payload = request.get_json()
 
-	query = models.Trip.update(**payload).where(models.Trip.id == id)
-	query.execute()
+		query = models.Trip.update(**payload).where(models.Trip.id==id)
+		query.execute()
 
-	trip = models.Trip.get_by_id(id)
-	trip_dict = model_to_dict(trip)
+		trip = models.Trip.get_by_id(id)
+		trip_dict = model_to_dict(trip)
 
-	return jsonify(data=trip_dict, status={"code": 200, "message": "Your trip has been updated successfully!"}), 200
+		return jsonify(data=trip_dict, status={"code": 200, "message": "Your trip has been updated successfully!"})
+	except models.DoesNotExist:
+		jsonify(data={}, status={"code": 401, "message": "Error deleting trip."})
 
 # and last but not least, this is the DELETE route
 @trip.route('/<id>', methods=["DELETE"])
