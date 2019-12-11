@@ -52,6 +52,22 @@ def create_station():
 # 	"transfer": "false"
 # }
 
+# S9 Create a route that loops through stations
+@station.route('/<line_color>/<direction>', methods=["GET"])
+def find_by_line(line_color, direction):
+
+	line_stations = models.Station.select().where(
+		models.Station.line_color == line_color, models.Station.direction == direction
+	)
+	# .first() display just one but DoesNotExist
+	# must loop through list to change them to dicts in order to display bc model_to_dict only does one, not multiple
+	line_stations_dict = [model_to_dict(station) for station in line_stations]
+
+	
+
+	return jsonify(data=line_stations_dict, status={"code": 200, "message": "Here are your stations"})
+
+
 
 #S6 create the SHOW route
 @station.route('/<id>', methods=["GET"])

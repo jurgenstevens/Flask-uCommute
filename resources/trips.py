@@ -49,6 +49,7 @@ def create_a_trip(user_id):
 
 		# print("THIS IS THE START vvvvvvv");
 		# print(trip_start_dict);
+		print(type(payload['transfer']))
 
 		trip = models.Trip.create(
 			user_id=payload['user_id'],
@@ -63,13 +64,14 @@ def create_a_trip(user_id):
 		# trips = model_to_dict(trip)
 		# print("we created trip successfully")
 		# trip_dict = model_to_dict(trip)
-		# print(trip_dict)
+		print(model_to_dict(trip))
 		return jsonify(data={
 			'start': model_to_dict(trip_start), 
-			'end': model_to_dict(trip_end), 
-			# 'trip': model_to_dict(trip)
-		}) #for debugging only
+			'end': model_to_dict(trip_end)}, 
+			status={'code': 200, 'message': 'Your trip has been successfully created!'}) 
+			#for debugging only
 		# return jsonify(data=model_to_dict(trip), status={"code": 201, "message": "Trip has been successfully created."}), 201
+			# 'trip': model_to_dict(trip)
 	# except models.DoesNotExist:
 	# 	print("error")
 		return jsonify(data={}, status={'code': 400, 'message': 'ERROR'}), 400
@@ -94,6 +96,7 @@ def create_a_trip(user_id):
 
 # this is the SHOW route to see specific trips
 @trip.route('/<id>', methods=["GET"])
+@login_required
 def pick_your_trip(id):
 	trip = models.Trip.get_by_id(id)
 
