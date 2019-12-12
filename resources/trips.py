@@ -67,6 +67,7 @@ def create_a_trip(origin, destination):
 		# trip_dict = model_to_dict(trip)
 		print(model_to_dict(trip))
 		return jsonify(data={
+			
 			'start': model_to_dict(trip_start), 
 			'end': model_to_dict(trip_end)}, 
 			status={'code': 200, 'message': 'Your trip has been successfully created!'}) 
