@@ -21,6 +21,7 @@ PORT = 8000
 #S1 Initialize an instance of the Flask class. This starts the website!
 app = Flask(__name__)
 
+
 # S1 we must set up a session secret to use flask-login
 app.secret_key = "This is a super secret string that you'll never get outta me"
 

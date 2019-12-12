@@ -31,34 +31,35 @@ def trip_index():
 		return jsonify(data={}, status={'code': 401, 'message': 'ERROR'}), 401
 
 # crete a trip
-@trip.route('/<user_id>', methods=["POST"])
+@trip.route('/<origin>/<destination>', methods=["POST"])
 # user must be logged in
 @login_required
-def create_a_trip(user_id):
+def create_a_trip(origin, destination):
 	# try:
 		payload = request.get_json()
 		# print(payload)
 		# # picking a start point
-		trip_start = models.Station.get(stop_id_origin=payload['origin'])
+		trip_start = models.Station.get_by_id(origin)
 		# # trip_start = models.Station.create(**payload)
 		# # pick destination
-		trip_end = models.Station.get(stop_id_dest=payload['destination'])
+		trip_end = models.Station.get_by_id(destination)
 
 		trip_start_dict = model_to_dict(trip_start)
 		trip_end_dict = model_to_dict(trip_end)
 
 		# print("THIS IS THE START vvvvvvv");
 		# print(trip_start_dict);
-		print(type(payload['transfer']))
+		# print(type(payload['transfer']))
 
 		trip = models.Trip.create(
-			user_id=payload['user_id'],
-			trip_name=payload['trip_name'],
-			color_id=payload['color_id'],
+			user_id=current_user.id,
+			trip_name="My Trip",
+			color_id="Orange",
 			origin=trip_start.id, 
 			destination=trip_end.id, 
-			direction=payload['direction'], 
-			transfer=payload['transfer'])
+			direction="Inbound",
+			transfer=False
+			)
 			# grab all of the middle stops in between to show to user
 		# print(type(trip))
 		# trips = model_to_dict(trip)
