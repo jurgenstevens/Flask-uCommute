@@ -1,4 +1,5 @@
 # virtualenv .env -p python3
+
 # source .env/bin/activate 
 # pip install -r requirements.txt
 # run "pip3 install -r requirements.txt." in git after cloning an assignment
