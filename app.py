@@ -1,5 +1,5 @@
+import os
 # virtualenv .env -p python3
-
 # source .env/bin/activate 
 # pip install -r requirements.txt
 # run "pip3 install -r requirements.txt." in git after cloning an assignment
@@ -103,6 +103,13 @@ def trip_json():
 def hello(username): # DO this.
 	return "Hello {}".format(username)
 
+# ADD THESE THREE LINES -- because in production the app will be run with 
+# gunicorn instead of by the three lines below, so we want to initialize the
+# tables in that case as well
+if 'ON_HEROKU' in os.environ: 
+  print('\non heroku!')
+  models.initialize()
+  
 # Run the app when the program starts
 if __name__ == '__main__':
 	models.initialize() #invokes the function that creates our tables models.py

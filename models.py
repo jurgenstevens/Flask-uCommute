@@ -1,12 +1,32 @@
+import os
 import datetime # S2 create the classes
 from peewee import *
 # S2 import * means import everything from Peewee, so that would be
 # SqliteDatabase, and Model
+from playhouse.db_url import connect
 from flask_login import UserMixin
 
 # peewee is our form, it's like mongoose
+if 'ON_HEROKU' in os.environ: 
+# later we will manually add this env var 
+                             
+# in heroku so we can write this code
+DATABASE = connect(os.environ.get('DATABASE_URL')) 
+# heroku will add this 
+# env var for you 
+# when you provision the
+# Heroku Postgres Add-on
+else:
+  # OPTIONALLY: instead of the above line, here's how you could have your 
+  # local app use PSQL instead of SQLite:
 
-DATABASE = SqliteDatabase('ucommute.sqlite') # you want to give it the name .sqlite extension
+  # DATABASE = PostgresqlDatabase('dog_demo', user='reuben')  
+
+  # the first argument is the database name -- YOU MUST MANUALLY CREATE 
+  # IT IN YOUR psql TERMINAL
+  # the second argument is your Unix/Linux username on your computer
+  
+	DATABASE = SqliteDatabase('ucommute.sqlite') # you want to give it the name .sqlite extension
 # when we want to go to production we'll use our postgres
 
 # to be have correctly in flask-login's session/login in functionality, the User class
