@@ -108,8 +108,8 @@ def hello(username): # DO this.
 # gunicorn instead of by the three lines below, so we want to initialize the
 # tables in that case as well
 if 'ON_HEROKU' in os.environ: 
-  print('\non heroku!')
-  models.initialize()
+	print('\non heroku!')
+	models.initialize()
 
 # Run the app when the program starts
 if __name__ == '__main__':
