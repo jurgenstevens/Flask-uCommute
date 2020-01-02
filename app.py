@@ -80,29 +80,29 @@ def after_request(response):
 
 # Here's a route in flask
 # Note: the default URL ends in / 
-# @app.route('/')
-# def index():
-# 	return 'Hello, world!'
+@app.route('/')
+def index():
+	return 'Hello, world!'
 
 # it's finicky about types -- you can't return just a string
 # @app.route('/test')
 # def trip():
 # 	return ['a', 'trip'] # note -- you can't return array
 
-@app.route('/test_json')
-def train_json():
-	return jsonify(['orange', 'line']) 
+# @app.route('/test_json')
+# def train_json():
+# 	return jsonify(['orange', 'line']) 
 # but you can return it as json
 # note we added an import for this function
 # jsonify can take key value pairs
-@app.route('/trip_json')
-def trip_json():
-	return jsonify(line="orange", stop="halsted")
+# @app.route('/trip_json')
+# def trip_json():
+# 	return jsonify(line="orange", stop="halsted")
 
 #how to make it take url paramater
-@app.route('/say_hello/<username>') # when someone goes here...
-def hello(username): # DO this.
-	return "Hello {}".format(username)
+# @app.route('/say_hello/<username>') # when someone goes here...
+# def hello(username): # DO this.
+# 	return "Hello {}".format(username)
 
 # ADD THESE THREE LINES -- because in production the app will be run with 
 # gunicorn instead of by the three lines below, so we want to initialize the
