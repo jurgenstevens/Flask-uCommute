@@ -91,8 +91,9 @@ def after_request(response):
 
 @app.route('/test_json')
 def train_json():
-	return jsonify(['orange', 'line']) # but you can return it as json
-										# note we added an import for this function
+	return jsonify(['orange', 'line']) 
+# but you can return it as json
+# note we added an import for this function
 # jsonify can take key value pairs
 @app.route('/trip_json')
 def trip_json():
@@ -109,7 +110,7 @@ def hello(username): # DO this.
 if 'ON_HEROKU' in os.environ: 
   print('\non heroku!')
   models.initialize()
-  
+
 # Run the app when the program starts
 if __name__ == '__main__':
 	models.initialize() #invokes the function that creates our tables models.py
