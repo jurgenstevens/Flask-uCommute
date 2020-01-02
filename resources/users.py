@@ -8,8 +8,8 @@ from playhouse.shortcuts import model_to_dict
 #make this a blueprint
 users = Blueprint('users', 'users')
 
-# @users.route('/', methods=['GET'])
-# def test_user_controller():
+@users.route('/', methods=['GET'])
+def test_user_controller():
 #   return "hi you have a user resource"
 
 @users.route('/register', methods=['POST'])
