@@ -1,4 +1,3 @@
-import os
 # virtualenv .env -p python3
 # source .env/bin/activate 
 # pip install -r requirements.txt
@@ -6,6 +5,7 @@ import os
 # run source .env/bin/activate in git
 # create a file called "ucommute.sqlite"
 
+import os
 from flask import Flask, jsonify, g # g = global variable
 from flask_cors import CORS
 #this is the main tool for coordinating session/login stuff in our app
@@ -13,7 +13,6 @@ from flask_login import LoginManager
 from resources.users import users
 from resources.stations import station
 from resources.trips import trip
-
 import models #S1 we gotta import the object and method that's going to create our app
 
 DEBUG = True #S1 this gives us pretty error message
@@ -80,9 +79,9 @@ def after_request(response):
 
 # Here's a route in flask
 # Note: the default URL ends in / 
-@app.route('/')
-def index():
-	return 'Hello, world!'
+# @app.route('/')
+# def index():
+# 	return resources
 
 # it's finicky about types -- you can't return just a string
 # @app.route('/test')

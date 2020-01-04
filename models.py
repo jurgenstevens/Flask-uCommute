@@ -5,6 +5,7 @@ from peewee import *
 # SqliteDatabase, and Model
 from playhouse.db_url import connect
 from flask_login import UserMixin
+from playhouse.db_url import connect
 
 # peewee is our form, it's like mongoose
 if 'ON_HEROKU' in os.environ: 
