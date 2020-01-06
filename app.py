@@ -54,9 +54,9 @@ def unauthorize():
 # localhost:3000 will be the react app when it's created
 # localhost:3000 represents a client that will communicate with our API
 # supports_credentials allows cookies to be sent to our API session
-CORS(users, origins=['http://localhost:3000', 'https://ucommutechi.herokuapp.com'], supports_credentials=True)
-CORS(station, origins=['http://localhost:3000', 'https://ucommutechi.herokuapp.com'], supports_credentials=True) # add this line later
-CORS(trip, origins=['http://localhost:3000', 'https://ucommutechi.herokuapp.com'], supports_credentials=True) # add this line later
+CORS(users, origins=['http://localhost:3000', 'https://ucommute.herokuapp.com'], supports_credentials=True)
+CORS(station, origins=['http://localhost:3000', 'https://ucommute.herokuapp.com'], supports_credentials=True) # add this line later
+CORS(trip, origins=['http://localhost:3000', 'https://ucommute.herokuapp.com'], supports_credentials=True) # add this line later
 
 
 
